@@ -9,4 +9,8 @@ class Animal {
   }
 }
 
+// Create a new instance of the Animal class
+let dog = new Animal("Dog", 4);
 
+// Use the describe method to log a description of the dog
+console.log(dog.describe()); 

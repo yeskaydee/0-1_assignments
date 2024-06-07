@@ -13,8 +13,8 @@ function PromiseFn(){
     })
 }
 
-PromiseFn();
-console.log("this is a "+PromiseFn());
+// PromiseFn();
+// console.log("this is a "+PromiseFn());
 
 function readFn(data){
     console.log(data);

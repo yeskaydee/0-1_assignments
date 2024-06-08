@@ -6,18 +6,44 @@
  */
 
 function wait1(t) {
+    let time = t*1000
+    return new Promise(function(resolve){
+        setTimeout(resolve,time)
+    })
 
 }
 
 function wait2(t) {
+    let time = t*1000
+    return new Promise(function(resolve){
+        setTimeout(resolve,time)
+    })
 
 }
 
 function wait3(t) {
+    let time = t*1000
+    return new Promise(function(resolve){
+        setTimeout(resolve,time)
+    })
 
 }
 
 function calculateTime(t1, t2, t3) {
+    const start = new Date();
+    return wait1(t1)
+    .then(function(){
+        return wait2(t2)
+    })
+    .then(function(){
+        return wait3(t3)
+    })
+    .then(function(){
+        let stop =  new Date();
+        return stop-start
+    })
+
+
 
 }
 

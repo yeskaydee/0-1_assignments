@@ -42,8 +42,71 @@
   const express = require('express');
   const bodyParser = require('body-parser');
   
+  const port=3000;
   const app = express();
   
   app.use(bodyParser.json());
+  let todos = [];
+  let count =1;
+
+    app.get('/',function(req,res){
+      res.send('Hello root')
+  })
+
+  app.get('/todos',function(req,res){
+    res.status(200).send(todos)
+  })
+  app.get('/todos/:id',function(req,res){
+    todoListSize = todos.length;
+    const id = parseInt(req.params.id, 10);
+    if(id > todoListSize){
+      res.status(404).send("Doesn't exist")
+    }
+    else{
+      res.send(todos[id-1]);
+    }
+  })
+
+  app.post('/todos',function(req,res){
+    const {title,completed,description} = req.body;
+    const newTodo={id:count++, title, completed, description}
+    todos.push(newTodo); // Append the new todo to the todos list
+    res.status(201).send({id: newTodo.id});
+  })
+
+  app.put('/todos/:id', (req, res) => {
+    todoListSize = todos.length;
+    const { id } = req.params;
+    const { title, completed } = req.body;
+    const todoIndex = todos.findIndex(todo => todo.id === parseInt(id, 10));
+  
+    if(id > todoListSize){
+      res.status(404).send('Todo not found');
+    }
+     else {
+      todos[todoIndex] = { ...todos[todoIndex], title, completed };
+      res.status(200).json(todos[todoIndex]);
+     }
+      
+  });
+  app.delete('/todos/:id', (req, res) => {
+    const { id } = req.params;
+    const todoIndex = todos.findIndex(todo => todo.id === parseInt(id, 10));
+  
+    if (todoIndex > -1) {
+      todos.splice(todoIndex, 1);
+      res.status(200).send('Todo item deleted successfully');
+    } else {
+      res.status(404).send('Todo not found');
+    }
+  });
+  app.use((req, res) => {
+    res.status(404).send('404 Not Found');
+  });
+
+  // app.listen(port, function()  {
+  //   console.log(`Example app listening on port ${port}`)
+  // })
+
   
   module.exports = app;
